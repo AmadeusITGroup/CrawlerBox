@@ -144,7 +144,7 @@ async def crawl(htmlfile=None,phish_url=None,phish_id: str=None,source_type=None
         #await asyncio.sleep(3)
         await pup_page.setViewport({'width':1366, 'height':768})
         if phish_url:
-            logger.info('[+] crawl_page_info %s :: Visiting URL :: %s',str(phish_id),{phish_url})
+            logger.info('[+] crawl_page_info %s :: Visiting URL :: %s',str(phish_id),phish_url)
             await pup_page.goto(phish_url)
         elif htmlfile:
             logger.info('[+] crawl_page_info :: opening the HTML file in a browser :: phish_id: %s', str(phish_id))
