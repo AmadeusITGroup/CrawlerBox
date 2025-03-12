@@ -1,7 +1,7 @@
 import threading
 import time
 from datetime import datetime
-
+import argparse
 
 from phishparser import parse_data
 import requests
@@ -41,10 +41,7 @@ def scheduler() :
         task_thread.start()
         time.sleep(600) #wait 10minutes
 
-
-
-if __name__ == "__main__":
-    import argparse
+def main():
     parser= argparse.ArgumentParser(description=help_desc, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-id', '--phish_id', default=None, help="phish_id of the reported email" )
     parser.add_argument('-d', '--date', default=None, help="date, if specified will fetch all the reported emails"  )
@@ -60,4 +57,8 @@ if __name__ == "__main__":
         analyze(inbox)
     else:
         scheduler()
+
+if __name__ == "__main__":
+    main()
+
 
