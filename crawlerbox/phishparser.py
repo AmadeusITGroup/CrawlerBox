@@ -15,11 +15,11 @@ from qreader import QReader
 import datefinder
 import ipaddress
 
-import crawl_page
-from personalized_config import url_rewrite
+from .crawl_page import crawl
+from .personalized_config import url_rewrite
 
-import phishdb_schema
-import phishdb_layer
+from . import phishdb_schema
+from . import phishdb_layer
 
 from pathlib import Path,os
 
@@ -34,8 +34,8 @@ from PIL import Image
 from polyfile.magic import MagicMatcher
 from bs4 import BeautifulSoup
 
-from config import company_name
-from phish_logger import Phish_Logger
+from .config import company_name
+from .phish_logger import Phish_Logger
 
 
 import pytesseract
@@ -47,7 +47,6 @@ help_desc = '''
 Parses a raw email aand extracts information about its header field (SPF,DMARC, DKIM, Received sequence, SMTP server,...)
 and its content (mails parts, urls, embedded scripts/urls) and sends the urls and html files to the rawler to be dynamically parsed
 '''
-
 
 
 def extract_urls(text):
@@ -64,7 +63,7 @@ def extract_urls(text):
 
 def start_crawler(phish_id,emailrecord,source_type,phish_url=None,htmlfile=None,session=None):
     try:
-        asyncio.get_event_loop().run_until_complete(crawl_page.crawl(phish_url=phish_url,
+        asyncio.get_event_loop().run_until_complete(crawl(phish_url=phish_url,
                                                                      htmlfile=htmlfile,
                                                                      phish_id=phish_id,
                                                                      source_type=source_type,
@@ -74,7 +73,7 @@ def start_crawler(phish_id,emailrecord,source_type,phish_url=None,htmlfile=None,
         if str(e).startswith('There is no current event loop in thread'):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            asyncio.get_event_loop().run_until_complete(crawl_page.crawl(phish_url=phish_url,
+            asyncio.get_event_loop().run_until_complete(crawl(phish_url=phish_url,
                                                                          htmlfile=htmlfile,
                                                                          phish_id=phish_id,
                                                                          source_type=source_type,
@@ -358,7 +357,7 @@ def decode_image(msg,phish_id,emailrecord,im_bytes=None,session=None):
 
     except Exception as e:
         logger.error('[!] decode_image :: phish_id: %s :: detectAndDecode :: Error: %s',str(phish_id),str(e))
-
+    
     try:
         if not data or data =='':
             qreader=QReader()
@@ -368,7 +367,7 @@ def decode_image(msg,phish_id,emailrecord,im_bytes=None,session=None):
 
     except Exception as e:
         logger.error('[!] decode_image :: phish_id: %s :: QReader :: Error: %s',str(phish_id),str(e))
-
+    
     try:
         if data :
             if not data.startswith('http'):

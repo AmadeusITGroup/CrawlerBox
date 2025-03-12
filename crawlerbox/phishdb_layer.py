@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine,and_
 from sqlalchemy.orm import sessionmaker
 
-import phishdb_schema
-from config import CRAWLER_DB_CONN_SERVER,company_name,ref_screenshot_hashes
+from . import phishdb_schema
+from .config import CRAWLER_DB_CONN_SERVER,company_name,ref_screenshot_hashes
 
 from urllib.parse import urlsplit
 from datetime import datetime
@@ -10,8 +10,8 @@ from datetime import datetime
 from dateutil import parser
 import re
 
-import cisco_investigate
-import shodan_enrichment
+from . import cisco_investigate
+from .shodan_enrichment import shodan_data
 
 import tldextract
 import socket
@@ -20,7 +20,7 @@ from PIL import Image
 import imagehash
 
 import hashlib
-from phish_logger import Phish_Logger
+from .phish_logger import Phish_Logger
 
 import pytesseract
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -30,7 +30,6 @@ logger=Phish_Logger.get_phish_logger('phish_logs')
 help_desc = '''
 Database query layer, includes the functions to communicate with PhishDB
 '''
-
 
 def open_session():
     db = create_engine(CRAWLER_DB_CONN_SERVER,pool_recycle=-1,pool_size=30, max_overflow=0)
@@ -775,7 +774,7 @@ def add_shodan_service_banners(ip_record,ip_type,ip,session):
         record_exists=session.query(phishdb_schema.Has_Service_Banner).filter_by(ipv6=ip_record,date=today).first()
 
     if not record_exists:
-        banners=shodan_enrichment.shodan_data(ip)
+        banners=shodan_data(ip)
         for banner in banners:
             service_banner= session.query(phishdb_schema.Service_Banner).filter_by(service=banner.get('service'),
                                             date=banner.get('date'),

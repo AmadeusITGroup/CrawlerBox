@@ -2,25 +2,34 @@ import asyncio
 import os
 from datetime import datetime
 import platform
-import phishdb_schema
-import phishdb_layer
+from . import phishdb_schema
+from . import phishdb_layer
 import tldextract
 from pathlib import Path
 import hashlib
-from phish_logger import Phish_Logger
-import additional_info
+from .phish_logger import Phish_Logger
+from .additional_info import whois_info
+import importlib
+import pyppeteer
 
-from pyppeteer import launch
+import shutil
 
 dir_path = os.path.abspath(os.path.dirname(__file__))
 
 logger=Phish_Logger.get_phish_logger('phish_logs')
 
 
-
 help_desc = '''
 Crawler, visits a url (Chrome Browser) or executes a HTML code in the browser, follows redirects and logs data about the crawled infrastructure
 '''
+
+# We need to replace the network_manager within pyppeteer
+pyppeteer_path = os.path.dirname(pyppeteer.__file__)
+source_file = os.path.join(dir_path,"network_manager.py")
+destination_file = os.path.join(pyppeteer_path, "network_manager.py") 
+shutil.copy(source_file, destination_file)
+importlib.reload(pyppeteer)
+
 
 
 async def crawl(htmlfile=None,phish_url=None,phish_id: str=None,source_type=None,emailrecord=None,session=None):
@@ -40,7 +49,7 @@ async def crawl(htmlfile=None,phish_url=None,phish_id: str=None,source_type=None
     elif platform.system()=='Linux':
         browser_path='/usr/bin/google-chrome'
 
-    browser = await launch({'headless':False,
+    browser = await pyppeteer.launch({'headless':False,
                             'executablePath': browser_path,
                             'args': [
                                 '--disable-blink-features=AutomationControlled',
@@ -64,7 +73,7 @@ async def crawl(htmlfile=None,phish_url=None,phish_id: str=None,source_type=None
                 fqdn_record=phishdb_layer.domain_exists(fqdn,emailrecord,session)
                 phishdb_layer.requests_domain(request_record,fqdn_record,session)
                 phishdb_layer.umbrella_enrichment(fqdn,fqdn_record,session)
-                w=additional_info.whois_info(fqdn)
+                w=whois_info(fqdn)
                 if w:
                     phishdb_layer.create_whoisrecord(w,fqdn_record,emailrecord,session)
 
@@ -95,7 +104,7 @@ async def crawl(htmlfile=None,phish_url=None,phish_id: str=None,source_type=None
                 fqdn_record=phishdb_layer.domain_exists(fqdn,emailrecord,session)
                 phishdb_layer.umbrella_enrichment(fqdn,fqdn_record,session)
                 response= phishdb_layer.add_response(res,request,fqdn_record,session)
-                w=additional_info.whois_info(fqdn)
+                w=whois_info(fqdn)
                 if w:
                     phishdb_layer.create_whoisrecord(w,fqdn_record,emailrecord,session)
                 security_details=res.securityDetails

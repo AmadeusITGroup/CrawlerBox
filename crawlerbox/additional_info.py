@@ -1,5 +1,5 @@
 import whois
-from phish_logger import Phish_Logger
+from .phish_logger import Phish_Logger
 logger=Phish_Logger.get_phish_logger('phish_logs')
 
 def whois_info(domain):

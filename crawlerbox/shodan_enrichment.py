@@ -3,7 +3,7 @@ from dateutil import parser as dateparser
 from datetime import timezone
 
 
-from config import SHODAN_API_KEY
+from .config import SHODAN_API_KEY
 
 
 def shodan_data(susp_ip):

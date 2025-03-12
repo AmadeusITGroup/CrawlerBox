@@ -3,23 +3,18 @@ import time
 from datetime import datetime
 import argparse
 
-from phishparser import parse_data
+from .phishparser import parse_data
 import requests
 
-from phish_logger import Phish_Logger
+from .personalized_config import fetch_new_emails_by_date,fetch_new_emails_by_id
 
-from personalized_config import fetch_new_emails_by_date,fetch_new_emails_by_id
-
-import shutil
-shutil.copy("network_manager.py", "/path/to/package/module_name.py")
-
+from .phish_logger import Phish_Logger
 logger=Phish_Logger.get_phish_logger('phish_logs')
 
 
 help_desc = '''
 Main Library to fetch, parse and crawl new reported emails
 '''
-
 
 def analyze(inbox):
     for i in range(len(inbox)):

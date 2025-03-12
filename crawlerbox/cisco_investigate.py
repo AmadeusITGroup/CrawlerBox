@@ -1,8 +1,8 @@
 import requests
 from  urllib3 import disable_warnings
 from datetime import datetime,timedelta
-from config import CISCO_TOKEN
-from phish_logger import Phish_Logger
+from .config import CISCO_TOKEN
+from .phish_logger import Phish_Logger
 
 
 help_desc = '''

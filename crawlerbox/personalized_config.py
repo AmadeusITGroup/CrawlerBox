@@ -1,6 +1,6 @@
 
 from urllib.parse import unquote,urlparse,parse_qs
-from phish_logger import Phish_Logger
+from .phish_logger import Phish_Logger
 
 
 help_desc = '''
