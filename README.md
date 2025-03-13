@@ -35,7 +35,30 @@ uv pip install -e .
 Please also consider rewriting the functions in `personalized_config.py`: `fetch_new_emails_by_date`, `fetch_new_emails_by_id`, and `url_rewrite`. The two first functions should match your implemetation for fetching newly reported emails, and `url_rewrite` is designed to extract and return a decoded URL from a given string. In case the URLs within the messages are rewritten (e.g., rewritten by Microsoft's Safe Links or Proofpoint's URL Defense), you might need to decode these URLs before loading them by the crawler.
 
 
-### Running CrawlerBox
+### Running *CrawlerBox*
+You can run *CrawlerBox* in three manners. 
+
+#### With the -id (--phish_id) option:
+The "id" argument corresponds to the id of the message to be analyzed (as is in your input DB). Example:
+
+```bash
+run_crawlerbox -id xxxx-xxxx-xxxx-xxxxxxx
+```
+
+
+#### With the -d (--date) option:
+The "d" argument represents a date string. *CrawlerBox* fetches all the reported emails on date "d" and analyzes them. Example:
+
+```bash
+run_crawlerbox -d 2025-01-01
+```
+
+#### With no options:
+*CrawlerBox* runs continously and fetches new reported emails every ten minutes. It automatically starts the analysis for the fetched messages. Example:
+
+```bash
+run_crawlerbox
+```
 
 ## Citation
 Please consider citing our paper if you find it useful:
@@ -48,3 +71,8 @@ Please consider citing our paper if you find it useful:
   year = {2025},
   organization = {IEEE}
 }
+```
+## Contributing 
+We welcome your contributions. Please feel free to fork the code, play with it, make some patches and send us pull requests using [issues](https://github.com/AmadeusITGroup/CrawlerBox/issues).
+
+We do have a [Code of conduct](https://github.com/AmadeusITGroup/CrawlerBox?tab=coc-ov-file#). Make sure to check it out before contributing.
