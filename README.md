@@ -14,8 +14,7 @@ For more detailed information on *CrawlerBox*, its functionality, and the result
 ### Installation 
 CrawlerBox is meant to be run on Windows. 
 
-#### Necessary dependencies
-First you need to install [vcredist_x64.exe](https://www.microsoft.com/en-gb/download/details.aspx?id=40784) from the Visual C++ Redistributable Packages for Visual Studio 2013. It is necessary for the working of the library responsible for reading QR codes ([QReader](https://pypi.org/project/qreader/)).
+
 
 #### Local installation
 Local installation can be done using uv
@@ -29,7 +28,10 @@ uv pip install -e .
 ```
 
 
-### Configuration 
+#### Necessary dependencies and configuration
+First you need to install [vcredist_x64.exe](https://www.microsoft.com/en-gb/download/details.aspx?id=40784) from the Visual C++ Redistributable Packages for Visual Studio 2013. It is necessary for the working of the library responsible for reading QR codes ([QReader](https://pypi.org/project/qreader/)).
+
+
 *CrawlerBox* relies on external services to operate (e.g., Cisco Umbrella and Shodan for data enrichment). Additionally, it connects to two external servers: one database for retrieving newly user-reported messages and another for storing the obtained results. Before running *CrawlerBox*, you must configure these dependencies. Please use the `config.py` file accordingly.
 
 Please also consider rewriting the functions in `personalized_config.py`: `fetch_new_emails_by_date`, `fetch_new_emails_by_id`, and `url_rewrite`. The two first functions should match your implemetation for fetching newly reported emails, and `url_rewrite` is designed to extract and return a decoded URL from a given string. In case the URLs within the messages are rewritten (e.g., rewritten by Microsoft's Safe Links or Proofpoint's URL Defense), you might need to decode these URLs before loading them by the crawler.

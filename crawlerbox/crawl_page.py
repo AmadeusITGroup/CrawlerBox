@@ -26,7 +26,7 @@ Crawler, visits a url (Chrome Browser) or executes a HTML code in the browser, f
 # We need to replace the network_manager within pyppeteer
 pyppeteer_path = os.path.dirname(pyppeteer.__file__)
 source_file = os.path.join(dir_path,"network_manager.py")
-destination_file = os.path.join(pyppeteer_path, "network_manager.py") 
+destination_file = os.path.join(pyppeteer_path, "network_manager.py")
 shutil.copy(source_file, destination_file)
 importlib.reload(pyppeteer)
 

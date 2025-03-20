@@ -357,7 +357,7 @@ def decode_image(msg,phish_id,emailrecord,im_bytes=None,session=None):
 
     except Exception as e:
         logger.error('[!] decode_image :: phish_id: %s :: detectAndDecode :: Error: %s',str(phish_id),str(e))
-    
+
     try:
         if not data or data =='':
             qreader=QReader()
@@ -367,7 +367,7 @@ def decode_image(msg,phish_id,emailrecord,im_bytes=None,session=None):
 
     except Exception as e:
         logger.error('[!] decode_image :: phish_id: %s :: QReader :: Error: %s',str(phish_id),str(e))
-    
+
     try:
         if data :
             if not data.startswith('http'):
