@@ -2,7 +2,7 @@
 ## Description
 *CrawlerBox* is an automated analysis framework designed for parsing emails and crawling embedded web resources. This infrastructure was developed to facilitate the study of evasive phishing emails reported by end users.
 
-For more detailed information on *CrawlerBox*, its functionality, and the results obtained, please refer to our paper "[A Closer Look at Modern Evasive Phishing Emails](https://example.com)".
+For more detailed information on *CrawlerBox*, its functionality, and the results obtained, please refer to our paper "A Closer Look at Modern Evasive Phishing Emails".
 <figure>
     <img src="./architecture.png" alt="Description of image">
     <figcaption>Figure 1: CrawlerBox Analysis Pipeline</figcaption>
