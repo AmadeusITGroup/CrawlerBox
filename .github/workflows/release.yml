@@ -81,6 +81,13 @@ jobs:
         inputs: >-
           ./dist/*.tar.gz
           ./dist/*.whl
+    - name: Delete the stub of Release
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: >-
+        gh release delete
+        "$GITHUB_REF_NAME"
+        --repo "$GITHUB_REPOSITORY"
     - name: Create GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
