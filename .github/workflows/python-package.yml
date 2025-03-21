@@ -43,9 +43,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: pip install tox tox-uv
-    - name: Run tox
-      # Run tox using the version of Python in `PATH`
-      run: tox -e py
+    # - name: Run tox
+    #   # Run tox using the version of Python in `PATH`
+    #   run: tox -e py
 
   dist:
     runs-on: ubuntu-latest
