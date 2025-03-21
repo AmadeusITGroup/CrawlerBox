@@ -19,12 +19,12 @@ jobs:
       matrix:
         os: [windows-latest]
         python-version:
-          - "3.9"
-          - "3.10"
-          - "3.11"
+          # - "3.9"
+          # - "3.10"
+          # - "3.11"
           - "3.12"
-          - "3.13"
-          - "pypy-3.9"
+          # - "3.13"
+          # - "pypy-3.9"
 
     name: ${{ matrix.os }} - ${{ matrix.python-version }}
     steps:
@@ -87,17 +87,17 @@ jobs:
         path: dist
     - run: twine check dist/*
 
-  dist_upload:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
-    needs: [dist_check]
-    name: PyPI upload
-    permissions:
-      id-token: write
-    steps:
-    - uses: actions/download-artifact@v4
-      with:
-        name: dist
-        path: dist
-    - name: Publish package to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+  # dist_upload:
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+  #   needs: [dist_check]
+  #   name: PyPI upload
+  #   permissions:
+  #     id-token: write
+  #   steps:
+  #   - uses: actions/download-artifact@v4
+  #     with:
+  #       name: dist
+  #       path: dist
+  #   - name: Publish package to PyPI
+  #     uses: pypa/gh-action-pypi-publish@release/v1
