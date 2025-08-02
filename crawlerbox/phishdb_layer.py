@@ -154,7 +154,7 @@ def update_header(maliciousemail,header,session):
             add_element(phishdb_schema.Has_Received_Field(received=received_record,header=email_header),session=session)
             if received['From']:
                 from_domain=domain_exists(received['From'],maliciousemail,session=session)
-                if from_domain:
+                if not from_domain:
                     add_element(phishdb_schema.Received_From(received=received_record,domain=from_domain),session=session)
                     if "From_ipv6" in received.keys():
                         from_ipv6=received['From_ipv6']
@@ -169,7 +169,7 @@ def update_header(maliciousemail,header,session):
 
             if received['By']:
                 by_domain=domain_exists(received['By'],maliciousemail,session=session)
-                if by_domain:
+                if not by_domain:
                     add_element(phishdb_schema.Received_By(received=received_record,domain=by_domain),session=session)
                     if "By_ipv6" in received.keys():
                         by_ipv6=received['By_ipv6']

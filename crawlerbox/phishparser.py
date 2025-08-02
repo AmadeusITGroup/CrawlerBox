@@ -21,7 +21,8 @@ from .personalized_config import url_rewrite
 from . import phishdb_schema
 from . import phishdb_layer
 
-from pathlib import Path,os
+from pathlib import Path
+import os
 
 from io import BytesIO
 import zipfile
